@@ -382,3 +382,4 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
              
              
 token = os.environ.get('BOT_TOKEN')
+bot.run(str(token))
