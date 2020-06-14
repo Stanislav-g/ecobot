@@ -3,6 +3,7 @@ from discord.ext import commands
 import asyncio
 from time import sleep
 import sqlite3
+import os
 
 client = commands.Bot( command_prefix = '$')
 client.remove_command('help')
