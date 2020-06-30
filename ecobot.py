@@ -8,7 +8,7 @@ import os
 client = commands.Bot( command_prefix = '$')
 client.remove_command('help')
 
-connection = sqlite3.connect('server.db')
+connection = sqlite3.connect('server.dbs')
 cursor = connection.cursor()
 
 @client.event
