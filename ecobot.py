@@ -379,7 +379,13 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
              await member.send( f'{ member.name}, вам было начислено на счет в банке **{amount} :dollar:**')
              await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**')
 
-
+@client.command()
+async def on_member_writing(member *args):
+    await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
+    num == len(args):
+        cursor.execute("UPDATE users SET cash = cash + {num} WHERE id = {}".format(member.id))
+        
+            
              
              
 token = os.environ.get('BOT_TOKEN')
