@@ -383,7 +383,7 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
 async def w(ctx, author, *args):
     await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
     num == len(args)
-    cursor.execute("UPDATE users SET cash = cash + {num} WHERE id = {}".format(ctx.author.id))
+    cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(num, ctx.author.id))
         
             
              
