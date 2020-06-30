@@ -380,7 +380,7 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
              await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**')
 
 @client.command()
-async def on_member_writing(author, *args):
+async def w(ctx, author, *args):
     await ctx.send('{} arguments: {}'.format(len(args), ', '.join(args)))
     num == len(args)
     cursor.execute("UPDATE users SET cash = cash + {num} WHERE id = {}".format(ctx.author.id))
