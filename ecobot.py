@@ -383,24 +383,22 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
 async def w(ctx, author, *args):
     cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(len(args), ctx.author.id))
         
+#sell_role
 @client.command()
-async def sellrole(ctx, role: discord.Role = None, cost: int = None):
+async def sell_role(ctx, role: discord.Role = None, cost: int = None):
     if role is None:
-        await ctx.send(f'Укажите роль')
-    
+        await ctx.send(f'{ctx.author}, введите роль, которую хотите продать!')
     if cost is None:
-        await ctx.send(f'Укажите цену')
-        
+        await ctx.send(f'{ctx.author}, введите стоимость роли, которую хотите продать!')
     else:
-        if role is not ctx.author.roles:
-            await ctx.send(f'У вас нет указаной роли')
+        if role not in ctx.author.roles:
+            await ctx.send(f'{ctx.author}, у вас нету данной роли, для того что бы её продавать!')
         else:
-            a = (['10000'])
-            if cost is a:
-                await ctx.send(f'Укажите цену ниже 10.000 :dollar:')
-            else:    
-                await ctx.send(f'Вы продали свою роль за **{cost} :dollar:** ')
-                cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(cost, ctx.author.id)) 
+            cursor.execute("UPDATE users SET cash = cash + {0} WHERE id = {1}".format(cost, ctx.author.id))
+            connection.commit()
+            await ctx.author.remove_roles(role)
+            await ctx.message.add_reaction('')
+        
 
              
 token = os.environ.get('BOT_TOKEN')
