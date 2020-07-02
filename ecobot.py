@@ -384,7 +384,53 @@ async def w(ctx, author, *args):
     cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(len(args), ctx.author.id))
         
 
-        
+
+#+rep
+@client.command()
+async def rep+(ctx, member: discord.Member = None):
+    if member is None:
+        await ctx.send(embed = discord.Embed(
+            description = f'У **{ctx.author}**, укажите пользователя, которому хотите отправить благодарность'
+        ))
+    else:
+        if member.id == ctx.author.id:
+            await ctx.send(f'**{ctx.author}**, нельзя выдавать благодарности самому себе!')
+        else:
+            cursor.execute("UPDATE users SET rep = rep + {} WHERE id = {}".format(1, member.id))
+            connection.commit()
+            await ctx.message.add_reaction('✔️')
+
+#-rep
+@client.command()
+async def rep-(ctx, member: discord.Member = None):
+    if member is None:
+        await ctx.send(embed = discord.Embed(
+            description = f'У **{ctx.author}**, укажите пользователя, которому хотите снять благодарность'
+        ))
+    else:
+        if member.id == ctx.author.id:
+            await ctx.send(f'**{ctx.author}**, нельзя снимать благодарности самому себе!')
+        else:
+            cursor.execute("UPDATE users SET rep = rep - {} WHERE id = {}".format(1, member.id))
+            connection.commit()
+            await ctx.message.add_reaction('✔️')
+
+#reps
+@client.command()
+async def reps(ctx, member: discord.Member = None):
+    if member is None:
+        await ctx.send(embed = discord.Embed(
+            description = f'У **{ctx.author}** {cursor.execute("SELECT rep FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} благодарностей'
+        ))
+    else:
+        if cursor.execute("SELECT rep FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
+            await ctx.send(embed = discord.Embed(
+            description = f'У **{member}** {cursor.execute("SELECT rep FROM users WHERE id = {}".format(member.id)).fetchone()[0]} благодарностей'
+        ))
+        else:
+            await ctx.send(embed = discord.Embed(
+                description = f'У **{member}** {cursor.execute("SELECT rep FROM users WHERE id = {}".format(member.id)).fetchone()[0]} благодарностей'
+            ))        
 
              
 token = os.environ.get('BOT_TOKEN')
