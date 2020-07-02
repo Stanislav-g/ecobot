@@ -221,9 +221,9 @@ async def adminhelp( ctx ):
 
 async def help( ctx ):
     
-    emb = discord.Embed( title = 'HELP', colour = discord.Color.red() )
-    emb.add_field( name = 'Commands',value = 'balance - баланс игрока\nshop - магазин ролей\nbuyrole - купить роль\nclik - кликер\nshopbusiness - магазин бизнеса\nbuybus - купить бизнес (@coffee, @restaurant, @carservice)\ntext - отправить сообщение другому пользователю за 50 :dollar:\nperevod - перевод денег пользователю(ник, сумма)')
-    await ctx.author.send( embed = emb )
+    embert = discord.Embed( title = 'HELP', colour = discord.Color.red() )
+    embert.add_field( name = 'Commands',value = 'balance - баланс игрока\nshop - магазин ролей\nbuyrole - купить роль\nclik - кликер\nshopbusiness - магазин бизнеса\nbuybus - купить бизнес (@coffee, @restaurant, @carservice)\ntext - отправить сообщение другому пользователю за 50 :dollar:\nperevod - перевод денег пользователю(ник, сумма)')
+    await ctx.author.send( embed = embert )
 
 
 @client.command()
