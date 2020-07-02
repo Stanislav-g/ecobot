@@ -387,16 +387,17 @@ async def w(ctx, author, *args):
 async def sellrole(ctx, role: discord.Role = None, cost: int = None):
     if role is None:
         await ctx.send(f'Укажите роль')
-
-    if role is not ctx.author.roles:
-        await ctx.send(f'У вас нет указаной роли')
-        
+    
     if cost is None:
         await ctx.send(f'Укажите цену')
         
     else:
-        await ctx.send(f'Вы продали свою роль за **{cost} :dollar:** ')
-        cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(cost, ctx.author.id))            
+        if role is not ctx.author.roles:
+            await ctx.send(f'У вас нет указаной роли')
+        else:
+            await ctx.send(f'Вы продали свою роль за **{cost} :dollar:** ')
+            cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(cost, ctx.author.id)) 
+
              
              
 token = os.environ.get('BOT_TOKEN')
