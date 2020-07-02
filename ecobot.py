@@ -16,6 +16,7 @@ async def on_ready():
     cursor.execute("""CREATE TABLE IF NOT EXISTS users (
     name TEXT,
     id INT,
+    rep INT,
     cash BIGINT,
     cashh BIGINT,
     rep INT,
