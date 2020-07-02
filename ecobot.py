@@ -388,7 +388,7 @@ async def w(ctx, author, *args):
 
 #+rep
 @client.command()
-async def rep+(ctx, member: discord.Member = None):
+async def reph(ctx, member: discord.Member = None):
     if member is None:
         await ctx.send(embed = discord.Embed(
             description = f'У **{ctx.author}**, укажите пользователя, которому хотите отправить благодарность'
@@ -403,7 +403,7 @@ async def rep+(ctx, member: discord.Member = None):
 
 #-rep
 @client.command()
-async def rep-(ctx, member: discord.Member = None):
+async def repl(ctx, member: discord.Member = None):
     if member is None:
         await ctx.send(embed = discord.Embed(
             description = f'У **{ctx.author}**, укажите пользователя, которому хотите снять благодарность'
