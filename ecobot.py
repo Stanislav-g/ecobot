@@ -383,7 +383,7 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
 async def w(ctx, author, *args):
     cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(len(args), ctx.author.id))
         
-@@client.command()
+@client.command()
 async def sellrole(ctx, role: discord.Role = None, cost: int = None):
     if role is None:
         await ctx.send(f'Укажите роль')
