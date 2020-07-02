@@ -383,7 +383,7 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
 async def w(ctx, author, *args):
     cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(len(args), ctx.author.id))
         
-@client.command()
+@@client.command()
 async def sellrole(ctx, role: discord.Role = None, cost: int = None):
     if role is None:
         await ctx.send(f'Укажите роль')
@@ -395,10 +395,12 @@ async def sellrole(ctx, role: discord.Role = None, cost: int = None):
         if role is not ctx.author.roles:
             await ctx.send(f'У вас нет указаной роли')
         else:
-            await ctx.send(f'Вы продали свою роль за **{cost} :dollar:** ')
-            cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(cost, ctx.author.id)) 
+            if cost is >10000:
+                await ctx.send(f'Укажите цену ниже 10.000 :dollar:')
+            else:    
+                await ctx.send(f'Вы продали свою роль за **{cost} :dollar:** ')
+                cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(cost, ctx.author.id)) 
 
-             
              
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
