@@ -395,7 +395,8 @@ async def sellrole(ctx, role: discord.Role = None, cost: int = None):
         if role is not ctx.author.roles:
             await ctx.send(f'У вас нет указаной роли')
         else:
-            if cost is >10000:
+            a = (['10000'])
+            if cost is a:
                 await ctx.send(f'Укажите цену ниже 10.000 :dollar:')
             else:    
                 await ctx.send(f'Вы продали свою роль за **{cost} :dollar:** ')
