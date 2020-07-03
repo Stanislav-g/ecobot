@@ -452,34 +452,6 @@ async def on_raw_reaction_add(payload):
                 await member.add_roles(role)
 
 
-#reactions
-@client.event
-async def on_raw_reaction_add(payload):
-    if payload.message_id == 728594240669745172: # ID Сообщения
-        guild = client.get_guild(payload.guild_id)
-        role = None
-
-        if str(payload.emoji) == ':1200pxPythonlogonotext:': # Emoji для реакций
-            role = guild.get_role(728595441016373269) # ID Ролей для выдачи
-        elif str(payload.emoji) == ':kisspnglogojavadevelopmentkitpor:':
-            role = guild.get_role(728595853605994558)
-        elif str(payload.emoji) == ' :cprogramminglanguageiconlettercp:':
-            role = guild.get_role(728595568183738420)
-        elif str(payload.emoji) == ':1200pxISO_C_Logo:':
-            role = guild.get_role(728595513489883298)
-        elif str(payload.emoji) == ':1200pxC_Sharp_wordmark:':
-            role = guild.get_role(728595599917580350)
-        elif str(payload.emoji) == ':1200pxUnofficial_JavaScript_logo:':
-            role = guild.get_role(728595815718715423)
-        elif str(payload.emoji) == ':1200pxPHPlogo: ':
-            role = guild.get_role(728595715600941126)
-        elif str(payload.emoji) == ':pngocean:':
-            role = guild.get_role(728595650639429632)
-    
-        if role:
-            member = guild.get_member(payload.user_id)
-            if member:
-                await member.add_roles(role)
     
 
              
