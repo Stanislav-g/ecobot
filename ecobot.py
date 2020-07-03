@@ -433,6 +433,27 @@ async def reps(ctx, member: discord.Member = None):
                 description = f'У **{member}** {cursor.execute("SELECT rep FROM users WHERE id = {}".format(member.id)).fetchone()[0]} благодарностей'
             ))        
 
+
+
+#reactions
+@client.event
+async def on_raw_reaction_add(payload):
+    if payload.message_id == 707908027524841522: # ID Сообщения
+        guild = client.get_guild(payload.guild_id)
+        role = None
+
+        if str(payload.emoji) == '1️⃣': # Emoji для реакций
+            role = guild.get_role(728595715600941126) # ID Ролей для выдачи
+        elif str(payload.emoji) == '2️⃣':
+            role = guild.get_role(707912296328069130)
+        
+        if role:
+            member = guild.get_member(payload.user_id)
+            if member:
+                await member.add_roles(role)
+
+
+
              
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
