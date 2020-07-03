@@ -442,7 +442,7 @@ async def on_raw_reaction_add(payload):
         role = None
 
         if str(payload.emoji) == '1️⃣': # Emoji для реакций
-            role = guild.get_role(728595715600941126) # ID Ролей для выдачи
+            role = guild.get_role(707872645856755752) # ID Ролей для выдачи
         elif str(payload.emoji) == '2️⃣':
             role = guild.get_role(707912296328069130)
         
@@ -450,6 +450,7 @@ async def on_raw_reaction_add(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.add_roles(role)
+
 
 #reactions
 @client.event
