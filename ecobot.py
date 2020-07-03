@@ -480,7 +480,22 @@ async def on_raw_reaction_add(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.add_roles(role)
-    
+ 
+ 
+@client.event
+async def on_raw_reaction_add(payload):
+    if payload.message_id == 728658937905414234: # ID Сообщения
+        guild = client.get_guild(payload.guild_id)
+        role = None
+
+        if str(payload.emoji) == '📖': # Emoji для реакций
+            role = guild.get_role(728659726870511677) # ID Ролей для выдачи 
+ 
+        if role:
+            member = guild.get_member(payload.user_id)
+            if member:
+                await member.add_roles(role)
+ 
 
              
 token = os.environ.get('BOT_TOKEN')
