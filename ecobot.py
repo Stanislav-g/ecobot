@@ -23,13 +23,9 @@ async def on_ready():
     lvl INT
 )""")
 
-    cursor.execute("""CREATE TABLE IF NOT EXISTS userstwo (
-    name TEXT,
+    cursor.execute("""CREATE TABLE IF NOT EXISTS eur (
     id INT,
-    rep INT,
-    cash BIGINT,
-    rep INT,
-    lvl INT
+    cash BIGINT
 )""")
 
 
@@ -91,7 +87,7 @@ async def balance(ctx, member: discord.Member = None):
             description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
         ))
         await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From userstwo WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
+            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
         ))
         
     
@@ -100,7 +96,7 @@ async def balance(ctx, member: discord.Member = None):
             description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
         ))
         await ctx.author.send(embed = discord.Embed(
-            description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From userstwo WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
+            description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
         ))
         
     
