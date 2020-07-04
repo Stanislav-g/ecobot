@@ -461,7 +461,7 @@ async def reps(ctx, member: discord.Member = None):
 @client.event
 async def on_message ( message ):
     await client.process_commands( message )
-    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, message.author.id))
+    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(int("0,001"), message.author.id))
     connection.commit()
 
     
