@@ -18,12 +18,11 @@ async def on_ready():
     id INT,
     rep INT,
     cash BIGINT,
-    cashh INT,
-    rep INT,
     lvl INT
 )""")
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS eur (
+       name TEXT,
        id INT,
        cash BIGINT
 )""")
