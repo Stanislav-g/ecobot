@@ -17,7 +17,7 @@ async def on_ready():
     name TEXT,
     id INT,
     rep INT,
-    message INT
+    message INT,
     cash BIGINT,
     lvl INT
 )""")
@@ -455,16 +455,16 @@ async def on_message ( message ):
 async def lvls(ctx, member: discord.Member = None):
     if member is None:
         await ctx.send(embed = discord.Embed(
-            description = f'У **{ctx.author}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} уровень'
+            description = f'У **{ctx.author}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} отправлено сообщений'
         ))
     else:
         if cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
             await ctx.send(embed = discord.Embed(
-            description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} уровень'
+            description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправлено сообщений'
         ))
         else:
             await ctx.send(embed = discord.Embed(
-                description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} уровень'
+                description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправлено сообщений'
             ))                
         
 
