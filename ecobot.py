@@ -470,7 +470,7 @@ async def on_message ( message ):
        
 #reps
 @client.command()
-async def reps(ctx, member: discord.Member = None):
+async def lvls(ctx, member: discord.Member = None):
     if member is None:
         await ctx.send(embed = discord.Embed(
             description = f'У **{ctx.author}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} уровень'
