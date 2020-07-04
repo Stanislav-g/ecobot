@@ -86,8 +86,9 @@ async def balance(ctx, member: discord.Member = None):
             description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
         ))
         await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From userstwo WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
+            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
         ))
+        
     
     else:
         await ctx.author.send(embed = discord.Embed(
