@@ -99,6 +99,9 @@ async def balance(ctx, member: discord.Member = None):
         await ctx.author.send(embed = discord.Embed(
             description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
         ))
+        await ctx.author.send(embed = discord.Embed(
+            description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From userstwo WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
+        ))
         
     
 @client.command()
