@@ -24,7 +24,7 @@ async def on_ready():
 )""")
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS userstwo (
-    cash BIGINT,
+        cash BIGINT
 )""")
 
 
