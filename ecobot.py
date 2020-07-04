@@ -24,8 +24,8 @@ async def on_ready():
 )""")
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS eur (
-    id INT,
-    cash BIGINT
+       id INT,
+       cash BIGINT
 )""")
 
 
@@ -86,15 +86,28 @@ async def balance(ctx, member: discord.Member = None):
         await ctx.author.send(embed = discord.Embed(
             description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
         ))
-        await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
-        ))
+        
         
     
     else:
         await ctx.author.send(embed = discord.Embed(
             description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
         ))
+
+
+
+
+@client.command()
+async def balanceeur(ctx, member: discord.Member = None):
+    await ctx.channel.purge( limit = 1 )
+    if member is None:
+        await ctx.author.send(embed = discord.Embed(
+            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
+        ))
+        
+        
+    
+    else:
         await ctx.author.send(embed = discord.Embed(
             description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
         ))
