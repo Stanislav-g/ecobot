@@ -453,9 +453,9 @@ async def on_message ( message ):
 async def message(ctx, member: discord.Member = None):
     if member is None:
         description = '{cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]}'
-        if description = 10:
+        if description == 10:
             await ctx.send(f'1lvl')   
-        elif description = 20:
+        elif description == 20:
             await ctx.send(f'2lvl')  
     else:
         if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
