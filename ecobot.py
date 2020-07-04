@@ -452,11 +452,11 @@ async def on_message ( message ):
 @client.command()
 async def message(ctx, member: discord.Member = None):
     if member is None:
-        description = '{cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]}'
-        if description == 10:
-            await ctx.send(f'1lvl')   
-        elif description == 20:
-            await ctx.send(f'2lvl')  
+        if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
+            await ctx.send(embed = discord.Embed(
+            description = f'У **{ctx.author}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} отправлено сообщений'
+
+        
     else:
         if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
             await ctx.send(embed = discord.Embed(
