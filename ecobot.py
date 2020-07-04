@@ -17,7 +17,6 @@ async def on_ready():
     name TEXT,
     id INT,
     rep INT,
-    message INT,
     cash BIGINT,
     lvl INT
 )""")
@@ -445,7 +444,7 @@ async def reps(ctx, member: discord.Member = None):
 @client.event
 async def on_message ( message ):
     await client.process_commands( message )
-    cursor.execute("UPDATE users SET message = message + {} WHERE id = {}".format(1, message.author.id))
+    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, message.author.id))
     connection.commit()
 
     
@@ -455,16 +454,16 @@ async def on_message ( message ):
 async def lvls(ctx, member: discord.Member = None):
     if member is None:
         await ctx.send(embed = discord.Embed(
-            description = f'У **{ctx.author}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} отправлено сообщений'
+            description = f'У **{ctx.author}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} отправлено сообщений'
         ))
     else:
-        if cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
+        if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
             await ctx.send(embed = discord.Embed(
-            description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправлено сообщений'
+            description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправлено сообщений'
         ))
         else:
             await ctx.send(embed = discord.Embed(
-                description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправлено сообщений'
+                description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправлено сообщений'
             ))                
         
 
