@@ -456,6 +456,25 @@ async def reps(ctx, member: discord.Member = None):
             ))        
 
 
+
+#filter
+@client.event
+async def on_message ( message ):
+    await client.process_commands( message )
+
+    msg = message.content.lower()
+    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, member.id))
+    connection.commit()
+
+    
+       
+        
+        
+
+
+
+
+
 #reactions
 @client.event
 async def on_raw_reaction_add(payload):
