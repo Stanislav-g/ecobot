@@ -17,6 +17,7 @@ async def on_ready():
     name TEXT,
     id INT,
     rep INT,
+    message INT
     cash BIGINT,
     lvl INT
 )""")
@@ -94,23 +95,6 @@ async def balance(ctx, member: discord.Member = None):
         ))
 
 
-
-
-@client.command()
-async def balanceeur(ctx, member: discord.Member = None):
-    await ctx.channel.purge( limit = 1 )
-    if member is None:
-        await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** ваш баланс составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(ctx.author.id)).fetchone()[0]} :dollar:**"""
-        ))
-        
-        
-    
-    else:
-        await ctx.author.send(embed = discord.Embed(
-            description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From eur WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
-        ))
-        
     
 @client.command()
 @commands.has_permissions(administrator = True)
@@ -461,7 +445,7 @@ async def reps(ctx, member: discord.Member = None):
 @client.event
 async def on_message ( message ):
     await client.process_commands( message )
-    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(int("0,001"), message.author.id))
+    cursor.execute("UPDATE users SET message = message + {} WHERE id = {}".format(1, message.author.id))
     connection.commit()
 
     
@@ -471,16 +455,16 @@ async def on_message ( message ):
 async def lvls(ctx, member: discord.Member = None):
     if member is None:
         await ctx.send(embed = discord.Embed(
-            description = f'У **{ctx.author}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} уровень'
+            description = f'У **{ctx.author}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} уровень'
         ))
     else:
-        if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
+        if cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
             await ctx.send(embed = discord.Embed(
-            description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} уровень'
+            description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} уровень'
         ))
         else:
             await ctx.send(embed = discord.Embed(
-                description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} уровень'
+                description = f'У **{member}** {cursor.execute("SELECT message FROM users WHERE id = {}".format(member.id)).fetchone()[0]} уровень'
             ))                
         
 
