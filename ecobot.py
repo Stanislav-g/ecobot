@@ -525,12 +525,7 @@ async def members_info(ctx):
     e = random.choise(data)
     embed = discord.Embed(title = f'Участники сервера', description = f"{e}", color = discord.Color.purple())
     
-    await ctx.send(embed = embed)   
-    await ctx.author.send(embed = discord.Embed(
-            description = f"""Баланс пользователя **{data}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(dataid.id)).fetchone()[0]} :dollar:**"""
-        ))
-                
-
+         
             
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
