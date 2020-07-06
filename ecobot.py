@@ -525,7 +525,7 @@ async def members_info(ctx):
     await ctx.send(embed = embed)
     
     await ctx.author.send(embed = discord.Embed(
-            description = f"""Баланс пользователя **{members}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
+            description = f"""Баланс пользователя **{data}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(data.id)).fetchone()[0]} :dollar:**"""
         ))
                     
 
