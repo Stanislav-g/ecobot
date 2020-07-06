@@ -523,6 +523,10 @@ async def members_info(ctx):
     embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.purple())
     
     await ctx.send(embed = embed)
+    
+    await ctx.author.send(embed = discord.Embed(
+            description = f"""Баланс пользователя **{members}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
+        ))
                     
 
             
