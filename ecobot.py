@@ -516,7 +516,6 @@ async def on_raw_reaction_add(payload):
             if member:
                 await member.add_roles(role)
 
-
 @client.command()
 async def members_info(ctx):
     guild = ctx.author.guild
