@@ -522,9 +522,12 @@ async def on_raw_reaction_add(payload):
 async def members_info(ctx):
     server_members = ctx.guild.members 
     data = "\n".join([i.name for i in server_members])
-    e = random.choise(data)
-    embed = discord.Embed(title = f'Участники сервера', description = f"{e}", color = discord.Color.purple())
+    embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.purple())
     
+    await ctx.send(embed = embed)
+    for member in ctx.guild.members:
+        embed = guild.members.get_balance()
+        await ctx.send(embed = embed)
          
             
 token = os.environ.get('BOT_TOKEN')
