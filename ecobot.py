@@ -526,7 +526,7 @@ async def members_info(ctx):
     
     await ctx.send(embed = embed)
     for member in ctx.guild.members:
-        embed = guild.members.get_balance()
+        embed = members.get_balance()
         await ctx.send(embed = embed)
          
             
