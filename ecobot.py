@@ -524,10 +524,9 @@ async def top_balance(ctx):
     if message.content.startswith('!member'):
         for guild in client.guilds:
             for member in guild.members:
-                print(member)
-                await ctx.author.send(embed = discord.Embed(
-                    description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
-                ))
+                
+                await ctx.send(member)
+                    
 
             
 token = os.environ.get('BOT_TOKEN')
