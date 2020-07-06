@@ -528,7 +528,18 @@ async def members_info(ctx):
     for member in ctx.guild.members:
         embed = member.get_balance()
         await ctx.send(embed = embed)
-         
+        
+        
+@client.command()
+async def message(ctx, member: discord.Member = None):
+    if member is None:
+        await ctx.send(f'dfg')
+    else:
+        member.get_balance()
+        await ctx.send(balance())
+        
+
+
             
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
