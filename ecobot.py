@@ -516,16 +516,20 @@ async def on_raw_reaction_add(payload):
             if member:
                 await member.add_roles(role)
 
+
+    
 @client.command()
 async def members_info(ctx):
     server_members = ctx.guild.members 
     data = "\n".join([i.name for i in server_members])
-    embed = discord.Embed(title = f'Участники сервера', description = f"""Баланс пользователя **{data}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(server_members.id)).fetchone()[0]} :dollar:**""", color = discord.Color.purple())
+    dataid = "\n".join([i.id for i in server_members])
+    embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.purple())
     
-    await ctx.send(embed = embed)
-    
-   
-                    
+    await ctx.send(embed = embed)   
+    await ctx.author.send(embed = discord.Embed(
+            description = f"""Баланс пользователя **{data}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(dataid.id)).fetchone()[0]} :dollar:**"""
+        ))
+                
 
             
 token = os.environ.get('BOT_TOKEN')
