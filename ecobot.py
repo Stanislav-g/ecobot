@@ -522,7 +522,7 @@ async def members_info(ctx):
     server_members = ctx.guild.members 
     data = "\n".join([i.name for i in server_members])
     embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.red())
-    await bot.send("\n".join([member for member in your_guild.members if "name role" in member.roles]))
+    await ctx.send("\n".join([member for member in your_guild.members if "name role" in member.roles]))
     
     await ctx.send(embed = embed)
                     
