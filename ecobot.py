@@ -519,7 +519,7 @@ async def on_raw_reaction_add(payload):
 
 @client.command()
 async def members_info(ctx):
-    guild = client.get_guild(payload.guild_id)
+    guild = client.get_guild(ctx.author.guild_id)
     server_members = ctx.guild.members 
     data = "\n".join([i.name for i in server_members])
     embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.red())
