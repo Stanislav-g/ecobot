@@ -517,30 +517,12 @@ async def on_raw_reaction_add(payload):
                 await member.add_roles(role)
 
 
-    
-@client.command()
-async def members_info(ctx):
-    server_members = ctx.guild.members 
-    data = "\n".join([i.name for i in server_members])
-    embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.purple())
-    
-    await ctx.send(embed = embed)
-    for member in ctx.guild.members:
-        embed = member.get_balance()
-        await ctx.send(embed = embed)
+
         
-        
-@client.command()
-async def message(ctx, member: discord.Member = None):
-    if member is None:
-        await ctx.send(f'dfg')
-    else:
-        member.get_balance()
-        await ctx.send(balance())
-        
-def getAllRows():
+@client.command()        
+async def getAllRows():
     try:
-        connection = sqlite3.connect('SQLite_Python.db')
+        connection = sqlite3.connect('server.db')
         cursor = connection.cursor()
         print("Connected to SQLite")
 
