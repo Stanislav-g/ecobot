@@ -538,7 +538,34 @@ async def message(ctx, member: discord.Member = None):
         member.get_balance()
         await ctx.send(balance())
         
+def getAllRows():
+    try:
+        connection = sqlite3.connect('SQLite_Python.db')
+        cursor = connection.cursor()
+        print("Connected to SQLite")
 
+        sqlite_select_query = """SELECT * from database_developers"""
+        cursor.execute(sqlite_select_query)
+        records = cursor.fetchall()
+        print("Total rows are:  ", len(records))
+        print("Printing each row")
+        for row in records:
+            print("Id: ", row[0])
+            print("Name: ", row[1])
+            print("Email: ", row[2])
+            print("Salary: ", row[3])
+            print("\n")
+
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("Failed to read data from table", error)
+    finally:
+        if (connection):
+            connection.close()
+            print("The Sqlite connection is closed")
+
+getAllRows()
 
             
 token = os.environ.get('BOT_TOKEN')
