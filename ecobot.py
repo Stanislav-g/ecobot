@@ -515,7 +515,19 @@ async def on_raw_reaction_add(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.add_roles(role)
- 
+
+
+
+@client.command()
+async def top_balance(ctx):
+    await ctx.channel.purge( limit = 1 )
+    if message.content.startswith('!member'):
+        for guild in client.guilds:
+            for member in guild.members:
+                print(member)
+                await ctx.author.send(embed = discord.Embed(
+                    description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
+                ))
 
             
 token = os.environ.get('BOT_TOKEN')
