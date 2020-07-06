@@ -517,15 +517,14 @@ async def on_raw_reaction_add(payload):
                 await member.add_roles(role)
 
 
-
 @client.command()
-async def top_balance(ctx):
-    await ctx.channel.purge( limit = 1 )
-    if message.content.startswith('!member'):
-        for guild in client.guilds:
-            for member in guild.members:
-                
-                await ctx.send(member)
+async def members_info(ctx):
+    server_members = ctx.guild.members 
+    data = "\n".join([i.name for i in server_members])
+    embed = discord.Embed(title = f'Участники сервера', description = f"{data}", color = discord.Color.red())
+    await bot.send("\n".join([member for member in your_guild.members if "name role" in member.roles]))
+    
+    await ctx.send(embed = embed)
                     
 
             
