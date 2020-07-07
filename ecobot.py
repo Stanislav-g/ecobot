@@ -214,7 +214,14 @@ async def buyrole(ctx, role: discord.Role = None):
             cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(role.id)).fetchone()[0], ctx.author.id))
 
             await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вы купили роль **{role}**')
-
+            if role == 728595813663506467:
+                s = random.choise(['100','500','1000','1100','2000','200','1300','1400','100','3000','100','700','800','900','999','2000','1111'])
+                cursor.execute("UPDATE users SET cash = cash + {s} WHERE id = {}".format(ctx.author.id))
+                connection.commit()
+                await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вам выпало {s} ')
+                await asyncio.sleep(3)
+                ppp_role = discord.utils.get( ctx.message.guild.roles, name = 'Кейс с деньгами от 100 до 3000!')
+                await member.remove_roles( ppp_role )
             
 
 @client.command( pass_context = True )
@@ -468,84 +475,6 @@ async def message(ctx, member: discord.Member = None):
                 description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
             ))               
         
-
-
-
-
-              
-
-
-
-@client.command()
-@commands.has_permissions(administrator = True)
-async def addproductshop(ctx, role: discord.Role = None, cost: int = None):
-    await ctx.channel.purge( limit = 1 )
-    if role is None:
-        await ctx.send(f"**{ctx.author}**, укажите роль")
-    if cost is None:
-        await ctx.send(f"**{ctx.author}**, укажите стоимость данной роли")
-
-    elif cost < 0:
-        await ctx.send(f"**{ctx.author}**, стоимость роли не может быть отрицательной")
-    else:
-        cursor.execute("INSERT INTO shopproduct VALUES ({}, {}, {})".format(role.id, ctx.guild.id, cost))
-        connection.commit()
-             
-             
-             
-@client.command()
-@commands.has_permissions(administrator = True)
-async def removeproductshop(ctx, role: discord.Role = None):
-    await ctx.channel.purge( limit = 1 )
-    if role is None:
-        await ctx.send(f"**{ctx.author}**, укажите роль")
-        
-    else:
-        cursor.execute("DELETE FROM shopproduct WHERE role_id = {}".format(role.id))
-        connection.commit()
-
-
-
-
-@client.command()
-async def shop_products(ctx):
-    embed = discord.Embed(title = 'Магазин вещей -buyproduct @роль')
-
-    for row in cursor.execute("SELECT role_id, cost FROM shopproduct WHERE id = {}".format(ctx.guild.id)):
-        if ctx.guild.get_role(row[0]) != None:
-            embed.add_field(
-                name = f"Стоимость **{row[1]} :dollar:**",
-                value = f"Вы приобретете вещь {ctx.guild.get_role(row[0]).mention}",
-                inline = False
-            )
-        else:
-            pass
-        
-    await ctx.send(embed = embed)
-
-            
-        
-    
-
-
-@client.command()
-async def buy_product(ctx, role: discord.Role = None):
-    await ctx.channel.purge( limit = 1 )
-    
-    if role is None:
-        await ctx.send(f"**{ctx.author}**, укажите вещь которую вы желаете приобрести")
-    else:
-        if role in ctx.author.roles:
-            await ctx.send(f"**{ctx.author}**, у вас уже имеется данная вещь")
-        elif cursor.execute("SELECT cost FROM shopproduct WHERE role_id = {}".format(role.id)).fetchone()[0] > cursor.execute("SELECT cash FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]:
-            await ctx.send(f"**{ctx.author}**, на вашем счету недостаточно средств")
-        else:
-            await ctx.author.add_roles(role)
-            cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shopproduct WHERE role_id = {}".format(role.id)).fetchone()[0], ctx.author.id))
-
-            await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вы купили вещь **{role}**')
-
-
 
 
 @client.event
