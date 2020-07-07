@@ -40,7 +40,7 @@ async def on_ready():
         cost BIGINT
 )""")
     
-     cursor.execute("""CREATE TABLE IF NOT EXISTS shopproduct (
+    cursor.execute("""CREATE TABLE IF NOT EXISTS shopproduct (
         role_id INT,
         id INT,
         cost BIGINT
