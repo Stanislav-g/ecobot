@@ -560,7 +560,7 @@ async def on_raw_reaction_remove(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.remove_roles(role)
-        
+                break
 
 
 
