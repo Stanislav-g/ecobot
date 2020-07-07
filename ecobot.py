@@ -491,7 +491,7 @@ async def on_raw_reaction_add(payload):
             if member:
                 cursor.execute("UPDATE users SET cash = cash + 1 WHERE id = {}".format(member.id))
                 connection.commit()
-                if member.role == Nitagas:
+                if member.roles == Nitagas:
                     cursor.execute("UPDATE users SET cash = cash + 10000 WHERE id = {}".format(member.id))
                     connection.commit()
 
