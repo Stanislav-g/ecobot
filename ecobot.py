@@ -636,7 +636,6 @@ async def buy_product(ctx, role: discord.Role = None):
 
 
 
-
 @client.event
 async def on_raw_reaction_add(payload):
     if payload.message_id == 729977336136728637: # ID Сообщения
