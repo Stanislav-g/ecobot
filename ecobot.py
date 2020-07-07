@@ -543,7 +543,7 @@ async def on_raw_reaction_add(payload):
 
         
 @client.command()        
-async def getAllRows():
+async def getAllRows(ctx):
     try:
         connection = sqlite3.connect('server.db')
         cursor = connection.cursor()
@@ -570,7 +570,7 @@ async def getAllRows():
             connection.close()
             print("The Sqlite connection is closed")
 
-getAllRows()
+
 
 
 @client.command()
