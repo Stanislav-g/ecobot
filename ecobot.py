@@ -641,17 +641,17 @@ async def buy_product(ctx, role: discord.Role = None):
 
 @client.event
 async def on_raw_reaction_add(payload):
-    if payload.message_id == 729950501210161172: # ID Сообщения
+    if payload.message_id == 729977336136728637: # ID Сообщения
         guild = client.get_guild(payload.guild_id)
         role = None
 
-        if str(payload.emoji) == '1️⃣': # Emoji для реакций
+        if str(payload.emoji) == '💵': # Emoji для реакций
             role = guild.get_role(728595813663506467) # ID Ролей для выдачи
         
         if role:
             member = guild.get_member(payload.user_id)
             if member:
-                cursor.execute("UPDATE users SET cash = cash + 10 WHERE id = {}".format(member.id))
+                cursor.execute("UPDATE users SET cash = cash + 1 WHERE id = {}".format(member.id))
                 connection.commit()
 
 
