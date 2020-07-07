@@ -535,34 +535,6 @@ async def on_raw_reaction_add(payload):
 
 
         
-@client.command()        
-async def getAllRows(ctx):
-    try:
-        connection = sqlite3.connect('server.db')
-        cursor = connection.cursor()
-        print("Connected to SQLite")
-
-        sqlite_select_query = """SELECT * from database_developers"""
-        cursor.execute(sqlite_select_query)
-        records = cursor.fetchall()
-        print("Total rows are:  ", len(records))
-        print("Printing each row")
-        for row in records:
-            print("Id: ", row[0])
-            print("Name: ", row[1])
-            print("Email: ", row[2])
-            print("Salary: ", row[3])
-            print("\n")
-
-        cursor.close()
-
-    except sqlite3.Error as error:
-        print("Failed to read data from table", error)
-    finally:
-        if (connection):
-            connection.close()
-            print("The Sqlite connection is closed")
-
 
 
 
@@ -651,7 +623,9 @@ async def on_raw_reaction_add(payload):
         if role:
             member = guild.get_member(payload.user_id)
             if member:
-                cursor.execute("UPDATE users SET cash = cash + 1 WHERE id = {}".format(member.id))
+                s = random.choice(['1','5','10','15','20','300','100','50','150']) 
+                cursor.execute("UPDATE users SET cash = cash - 100 WHERE id = {}".format(member.id))
+                cursor.execute("UPDATE users SET cash = cash + [s] WHERE id = {}".format(member.id))
                 connection.commit()
 
 
