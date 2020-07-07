@@ -491,9 +491,7 @@ async def on_raw_reaction_add(payload):
             if member:
                 cursor.execute("UPDATE users SET cash = cash + 1 WHERE id = {}".format(member.id))
                 connection.commit()
-                if role(705361654375776276) in member.role
-                    cursor.execute("UPDATE users SET cash = cash + 10000 WHERE id = {}".format(member.id))
-                    connection.commit()
+                
 
 @client.event
 async def on_raw_reaction_remove(payload):
