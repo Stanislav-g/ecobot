@@ -496,7 +496,7 @@ async def on_raw_reaction_add(payload):
                 
                 if role in ctx.author.roles:
                     await ctx.send(f"**{ctx.author}**, у вас уже имеется данная вещь")
-                elif cursor.execute(cursor.execute("UPDATE users SET cash = cash - 1000 WHERE id = {}".format(ctx.author.id)) > cursor.execute("SELECT cash FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]:
+                elif 1000 > cursor.execute("SELECT cash FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]:
                     await ctx.send(f"**{ctx.author}**, на вашем счету недостаточно средств")
                 else:
                     
