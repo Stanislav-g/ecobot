@@ -504,6 +504,8 @@ async def on_raw_reaction_add(payload):
                     ppp_role = discord.utils.get( ctx.message.guild.roles, name = 'Кейс с деньгами от 100 до 3000!')
                     await member.remove_roles( ppp_role )
 
+
+
 @client.event
 async def on_raw_reaction_add(payload):
     if payload.message_id == 728594240669745172: # ID Сообщения
@@ -531,8 +533,6 @@ async def on_raw_reaction_add(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.add_roles(role)
-
-
 
               
 
