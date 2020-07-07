@@ -75,7 +75,6 @@ async def status(ctx):
         await asyncio.sleep(60)
 
     
-
 @client.event
 async def on_member_join(member):
     if cursor.execute(f"SELECT id FROM users WHERE id = {member.id}").fetchone() is None:
