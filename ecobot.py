@@ -622,20 +622,23 @@ async def buy_product(ctx, role: discord.Role = None):
     else:
         if role in ctx.author.roles:
             await ctx.send(f"**{ctx.author}**, у вас уже имеется данная вещь")
-        elif cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(role.id)).fetchone()[0] > cursor.execute("SELECT cash FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]:
+        elif cursor.execute("SELECT cost FROM shopproduct WHERE role_id = {}".format(role.id)).fetchone()[0] > cursor.execute("SELECT cash FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]:
             await ctx.send(f"**{ctx.author}**, на вашем счету недостаточно средств")
         else:
             await ctx.author.add_roles(role)
-            cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(role.id)).fetchone()[0], ctx.author.id))
+            cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shopproduct WHERE role_id = {}".format(role.id)).fetchone()[0], ctx.author.id))
 
             await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вы купили вещь **{role}**')
 
             if role == 728595813663506467:
                 while True:
                     s = random.choise(['100','500','1000','1100','2000','200','1300','1400','100','3000','100','700','800','900','999','2000','1111'])
-                    cursor.execute("UPDATE users SET cash = cash + s WHERE id = {}".format(ctx.author.id))
+                    cursor.execute("UPDATE users SET cash = cash + {s} WHERE id = {}".format(ctx.author.id))
                     connection.commit()
-                    await asyncio.sleep(60)
+                    await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вам выпало **{s}** :dollar:')
+                    await asyncio.sleep(3)
+                    ppp_role = discord.utils.get( ctx.message.guild.roles, name = 'Кейс с деньгами от 100 до 3000!')
+                    await member.remove_roles( ppp_role )
 
 
 
