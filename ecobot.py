@@ -179,7 +179,7 @@ async def removeshop(ctx, role: discord.Role = None):
 
 @client.command()
 async def shop(ctx):
-    embed = discord.Embed(title = 'Магазин ролей -buyrole @роль')
+    embed = discord.Embed(title = 'Магазин ролей $buyrole @роль')
 
     for row in cursor.execute("SELECT role_id, cost FROM shop WHERE id = {}".format(ctx.guild.id)):
         if ctx.guild.get_role(row[0]) != None:
