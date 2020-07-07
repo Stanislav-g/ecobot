@@ -592,7 +592,6 @@ async def on_raw_reaction_remove(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.remove_roles(role)  
-
             
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
