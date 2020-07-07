@@ -483,21 +483,33 @@ async def message(ctx, member: discord.Member = None):
 #reactions
 @client.event
 async def on_raw_reaction_add(payload):
-    if payload.message_id == 707908027524841522: # ID Сообщения
+    if payload.message_id == 729950501210161172: # ID Сообщения
         guild = client.get_guild(payload.guild_id)
         role = None
 
         if str(payload.emoji) == '1️⃣': # Emoji для реакций
-            role = guild.get_role(707872645856755752) # ID Ролей для выдачи
-        elif str(payload.emoji) == '2️⃣':
-            role = guild.get_role(707912296328069130)
-        elif str(payload.emoji) == '3️⃣':
-            role = guild.get_role(728595441016373269)
+            role = guild.get_role(728595813663506467) # ID Ролей для выдачи
         
         if role:
             member = guild.get_member(payload.user_id)
             if member:
-                await member.add_roles(role)
+                
+                if role in ctx.author.roles:
+                    await ctx.send(f"**{ctx.author}**, у вас уже имеется данная вещь")
+                elif cursor.execute(cursor.execute("UPDATE users SET cash = cash - 1000 WHERE id = {}".format(ctx.author.id)) > cursor.execute("SELECT cash FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]:
+                    await ctx.send(f"**{ctx.author}**, на вашем счету недостаточно средств")
+                else:
+                    
+                    cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shopproduct WHERE role_id = {}".format(role.id)).fetchone()[0], ctx.author.id))
+
+                    await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вы купили вещь **{role}**')
+                    random.choise(['100','500','1000','1100','2000','200','1300','1400','100','3000','100','700','800','900','999','2000','1111'])
+                    cursor.execute("UPDATE users SET cash = cash + {s} WHERE id = {}".format(ctx.author.id))
+                    connection.commit()
+                    await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вам выпало {s} ')
+                    await asyncio.sleep(3)
+                    ppp_role = discord.utils.get( ctx.message.guild.roles, name = 'Кейс с деньгами от 100 до 3000!')
+                    await member.remove_roles( ppp_role )
 
 @client.event
 async def on_raw_reaction_add(payload):
