@@ -561,8 +561,7 @@ async def on_raw_reaction_add(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 s = random.choice(['1','5','10','15','20','300','100','50','150']) 
-                cursor.execute("UPDATE users SET cash = cash - 100 WHERE id = {}".format(member.id))
-                cursor.execute("UPDATE users SET cash = cash + {s} WHERE id = {}".format(member.id))
+                cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(s, member.id))
                 connection.commit()
 
 
