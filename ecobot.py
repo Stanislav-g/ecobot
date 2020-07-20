@@ -97,20 +97,23 @@ async def on_message ( message ):
     cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(int("1") / int("10"), message.author.id))
     connection.commit()
     
-@client.command()
-async def lvl(ctx, member: discord.Member = None):
+@Client.command()
+async def message(ctx, member: discord.Member = None):
     if member is None:
-        numlvl = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)[0])
+        lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]
+        totallvl = lvlnum[0]
         await ctx.send(embed = discord.Embed(
-            description = f'ЛВЛ пользователя {ctx.author} составляет {numlvl} '
+            description = f'У {ctx.author} {totallvl} отправленых сообщений'
         ))
     else:
         if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
-            lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]
             await ctx.send(embed = discord.Embed(
-            description = f'ЛВЛ пользователя {member} составляет {lvlnum[0]} '
+            description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
         ))
-       
+        else:
+            await ctx.send(embed = discord.Embed(
+                description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
+            ))
     
 @client.command()
 @commands.has_permissions(administrator = True)
