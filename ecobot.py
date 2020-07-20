@@ -92,43 +92,26 @@ async def balance(ctx, member: discord.Member = None):
         ))
 
 @client.event
-async def on_message(message):
-    cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(1, message.author.id))
-    if xp == 10:
-        cursor.execute("UPDATE users SET lvl = lvl + {1} WHERE id = {}".format( member.id))
-        
+async def on_message ( message ):
+    await client.process_commands( message )
+    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, message.author.id))
+    connection.commit()
     
 @client.command()
-async def profile(ctx, member: discord.Member = None):
-    await ctx.channel.purge( limit = 1 )
+async def message(ctx, member: discord.Member = None):
     if member is None:
-        await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** xp **{cursor.execute("SELECT xp From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} **"""
+        await ctx.send(embed = discord.Embed(
+            description = f'У {ctx.author} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} отправленых сообщений'
         ))
-        
-        
-    
     else:
-        await ctx.author.send(embed = discord.Embed(
-            description = f""" xp **{member}** составляет **{cursor.execute("SELECT xp From users WHERE id = {}".format(member.id)).fetchone()[0]}**"""
+        if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
+            await ctx.send(embed = discord.Embed(
+            description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
         ))
-
-@client.command()
-async def lvl(ctx, member: discord.Member = None):
-    await ctx.channel.purge( limit = 1 )
-    if member is None:
-        await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** lvl **{cursor.execute("SELECT lvl From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} **"""
-        ))
-        
-        
-    
-    else:
-        await ctx.author.send(embed = discord.Embed(
-            description = f""" lvl **{member}** составляет **{cursor.execute("SELECT lvl From users WHERE id = {}".format(member.id)).fetchone()[0]}**"""
-        ))
-
-
+        else:
+            await ctx.send(embed = discord.Embed(
+                description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
+            ))
     
 @client.command()
 @commands.has_permissions(administrator = True)
