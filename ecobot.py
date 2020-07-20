@@ -18,8 +18,9 @@ async def on_ready():
     id INT,
     rep INT,
     cash BIGINT,
-    lvl INT,
-    xp INT
+    xp INT,
+    lvl INT
+    
 )""")
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS eur (
@@ -103,7 +104,7 @@ async def balance(ctx, member: discord.Member = None):
 async def on_message(message):
     cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(len(message), member.id))
     if member.xp >= 10:
-        cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(len(args), member.id))
+        cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(len(message), member.id))
         
     
 @client.command()
