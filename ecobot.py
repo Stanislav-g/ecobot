@@ -100,19 +100,17 @@ async def on_message ( message ):
 @client.command()
 async def lvl(ctx, member: discord.Member = None):
     if member is None:
+        numlvl = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]
         await ctx.send(embed = discord.Embed(
-            description = f'ЛВЛ пользователя {ctx.author} составляет {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} '
+            description = f'ЛВЛ пользователя {ctx.author} составляет {numlvl[0]} '
         ))
     else:
         if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
             lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]
             await ctx.send(embed = discord.Embed(
-            description = f'У {member} {lvlnum[0]} отправленых сообщений'
+            description = f'ЛВЛ пользователя {member} составляет {lvlnum[0]} '
         ))
-        else:
-            await ctx.send(embed = discord.Embed(
-                description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
-            ))
+       
     
 @client.command()
 @commands.has_permissions(administrator = True)
