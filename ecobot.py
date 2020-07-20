@@ -98,6 +98,43 @@ async def balance(ctx, member: discord.Member = None):
             description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**"""
         ))
 
+@client.event
+async def on_message(message *args):
+    cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(len(args), member.id))
+    if member.xp >= 10:
+        cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(len(args), member.id))
+        
+    
+@client.command()
+async def profile(ctx, member: discord.Member = None):
+    await ctx.channel.purge( limit = 1 )
+    if member is None:
+        await ctx.author.send(embed = discord.Embed(
+            description = f"""**{ctx.author}** xp **{cursor.execute("SELECT xp From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} **"""
+        ))
+        
+        
+    
+    else:
+        await ctx.author.send(embed = discord.Embed(
+            description = f""" xp **{member}** составляет **{cursor.execute("SELECT xp From users WHERE id = {}".format(member.id)).fetchone()[0]}**"""
+        ))
+
+@client.command()
+async def lvl(ctx, member: discord.Member = None):
+    await ctx.channel.purge( limit = 1 )
+    if member is None:
+        await ctx.author.send(embed = discord.Embed(
+            description = f"""**{ctx.author}** lvl **{cursor.execute("SELECT lvl From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} **"""
+        ))
+        
+        
+    
+    else:
+        await ctx.author.send(embed = discord.Embed(
+            description = f""" lvl **{member}** составляет **{cursor.execute("SELECT lvl From users WHERE id = {}".format(member.id)).fetchone()[0]}**"""
+        ))
+
 
     
 @client.command()
