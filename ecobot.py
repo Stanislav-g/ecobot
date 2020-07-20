@@ -18,7 +18,7 @@ async def on_ready():
     id INT,
     rep INT,
     cash BIGINT,
-    warns INT,
+    xp INT,
     lvl INT
     
 )""")
@@ -425,10 +425,7 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
              await member.send( f'{ member.name}, вам было начислено на счет в банке **{amount} :dollar:**')
              await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**')
 
-@client.command()
-async def w(ctx, author, *args):
-    cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(len(args), ctx.author.id))
-        
+       
 
 
 #+rep
@@ -477,16 +474,6 @@ async def reps(ctx, member: discord.Member = None):
             await ctx.send(embed = discord.Embed(
                 description = f'У **{member}** {cursor.execute("SELECT rep FROM users WHERE id = {}".format(member.id)).fetchone()[0]} благодарностей'
             ))        
-
-
-
-#filter
-@client.event
-async def on_message ( message ):
-    await client.process_commands( message )
-    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(1, message.author.id))
-    connection.commit()
-
     
        
 @client.command()
