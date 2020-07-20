@@ -101,7 +101,7 @@ async def on_message ( message ):
 async def message(ctx, member: discord.Member = None):
     if member is None:
         lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]
-        totallvl = lvlnum[0]
+        totallvl = lvlnum
         await ctx.send(embed = discord.Embed(
             description = f'У {ctx.author} {totallvl} отправленых сообщений'
         ))
