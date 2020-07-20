@@ -105,10 +105,10 @@ async def message(ctx, member: discord.Member = None):
         ))
     else:
         if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
-            lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0])
+            lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]
             await ctx.send(embed = discord.Embed(
             description = f'У {member} {lvlnum} отправленых сообщений'
-        )
+        ))
         else:
             await ctx.send(embed = discord.Embed(
                 description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
