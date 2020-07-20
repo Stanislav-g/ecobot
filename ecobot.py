@@ -100,7 +100,7 @@ async def on_message ( message ):
 @client.command()
 async def lvl(ctx, member: discord.Member = None):
     if member is None:
-        numlvl = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)[0]).fetchone()[0]
+        numlvl = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)[0])
         await ctx.send(embed = discord.Embed(
             description = f'ЛВЛ пользователя {ctx.author} составляет {numlvl} '
         ))
