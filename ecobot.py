@@ -97,7 +97,7 @@ async def on_message ( message ):
     cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(int("1") / int("10"), message.author.id))
     connection.commit()
     
-@Client.command()
+@client.command()
 async def message(ctx, member: discord.Member = None):
     if member is None:
         lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]
