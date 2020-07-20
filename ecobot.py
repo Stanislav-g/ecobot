@@ -99,8 +99,8 @@ async def balance(ctx, member: discord.Member = None):
         ))
 
 @client.event
-async def on_message(message *args):
-    cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(len(args), member.id))
+async def on_message(message):
+    cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(len(message), member.id))
     if member.xp >= 10:
         cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(len(args), member.id))
         
