@@ -94,8 +94,8 @@ async def balance(ctx, member: discord.Member = None):
 @client.event
 async def on_message ( message ):
     await client.process_commands( message )
-    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(int("1") / int("10"), message.author.id))
-    
+    cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(int("1") / int("100"), message.author.id))
+    connection.commit()
     
 @client.command()
 async def message(ctx, member: discord.Member = None):
@@ -105,9 +105,10 @@ async def message(ctx, member: discord.Member = None):
         ))
     else:
         if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
+            lvlnum = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0])
             await ctx.send(embed = discord.Embed(
-            description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
-        ))
+            description = f'У {member} {lvlnum} отправленых сообщений'
+        )
         else:
             await ctx.send(embed = discord.Embed(
                 description = f'У {member} {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
