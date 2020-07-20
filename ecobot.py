@@ -18,7 +18,7 @@ async def on_ready():
     id INT,
     rep INT,
     cash BIGINT,
-    xp INT,
+    warns INT,
     lvl INT
     
 )""")
@@ -102,8 +102,8 @@ async def balance(ctx, member: discord.Member = None):
 
 @client.event
 async def on_message(message):
-    cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(len(message), member.id))
-    if member.xp >= 10:
+    cursor.execute("UPDATE users SET warns = warns + {} WHERE id = {}".format(len(message), member.id))
+    if member.warns >= 10:
         cursor.execute("UPDATE users SET lvl = lvl + {1} WHERE id = {}".format( member.id))
         
     
@@ -112,14 +112,14 @@ async def profile(ctx, member: discord.Member = None):
     await ctx.channel.purge( limit = 1 )
     if member is None:
         await ctx.author.send(embed = discord.Embed(
-            description = f"""**{ctx.author}** xp **{cursor.execute("SELECT xp From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} **"""
+            description = f"""**{ctx.author}** xp **{cursor.execute("SELECT warns From users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} **"""
         ))
         
         
     
     else:
         await ctx.author.send(embed = discord.Embed(
-            description = f""" xp **{member}** составляет **{cursor.execute("SELECT xp From users WHERE id = {}".format(member.id)).fetchone()[0]}**"""
+            description = f""" xp **{member}** составляет **{cursor.execute("SELECT warns From users WHERE id = {}".format(member.id)).fetchone()[0]}**"""
         ))
 
 @client.command()
