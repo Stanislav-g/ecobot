@@ -95,7 +95,7 @@ async def balance(ctx, member: discord.Member = None):
 async def on_message ( message ):
     await client.process_commands( message )
     cursor.execute("UPDATE users SET lvl = lvl + {} WHERE id = {}".format(float(int("1") / int("10"), message.author.id))
-    connection.commit()
+    
     
 @client.command()
 async def message(ctx, member: discord.Member = None):
