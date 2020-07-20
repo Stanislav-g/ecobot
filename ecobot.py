@@ -94,7 +94,7 @@ async def balance(ctx, member: discord.Member = None):
 @client.event
 async def on_message(message):
     cursor.execute("UPDATE users SET xp = xp + {} WHERE id = {}".format(len(message), member.id))
-    if Member.xp == 10:
+    if xp == 10:
         cursor.execute("UPDATE users SET lvl = lvl + {1} WHERE id = {}".format( member.id))
         
     
@@ -386,11 +386,6 @@ async def buybus(ctx, role: discord.Role = None):
                     await asyncio.sleep(60)
                 
 
-
-
-
-                        
-
            
 @client.command()
 async def text(ctx, arg = None, member: discord.Member = None):
@@ -475,22 +470,7 @@ async def reps(ctx, member: discord.Member = None):
                 description = f'У **{member}** {cursor.execute("SELECT rep FROM users WHERE id = {}".format(member.id)).fetchone()[0]} благодарностей'
             ))        
     
-       
-@client.command()
-async def message(ctx, member: discord.Member = None):
-    if member is None:
-        await ctx.send(embed = discord.Embed(
-            description = f'У **{ctx.author}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(ctx.author.id)).fetchone()[0]} отправленых сообщений'
-        ))
-    else:
-        if cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0] == 1:
-            await ctx.send(embed = discord.Embed(
-            description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
-        ))
-        else:
-            await ctx.send(embed = discord.Embed(
-                description = f'У **{member}** {cursor.execute("SELECT lvl FROM users WHERE id = {}".format(member.id)).fetchone()[0]} отправленых сообщений'
-            ))               
+         
         
 
 
