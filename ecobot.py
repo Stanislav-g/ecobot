@@ -512,6 +512,27 @@ async def on_raw_reaction_remove(payload):
             member = guild.get_member(payload.user_id)
             if member:
                 await member.remove_roles(role)  
+                
+                
+@client.event
+async def on_raw_reaction_add(payload):
+    if payload.message_id == 737004772430708807: # ID Сообщения
+        guild = client.get_guild(payload.guild_id)
+        role = None
+
+        if str(payload.emoji) == '1️⃣': # Emoji для реакций
+            role = guild.get_role(706919438405861446) # ID Ролей для выдачи
+        
+        if role:
+            member = guild.get_member(payload.user_id)
+            if member:
+                await member.add_roles(role)
+                amount = random.randit('10','50','100')
+                cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(amount, member.id))
+                connection.commit()
+                await asyncio.sleep(12)
+                await member.remove_roles(role)
+                
             
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
