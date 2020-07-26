@@ -505,6 +505,8 @@ async def on_raw_reaction_remove(payload):
             role = guild.get_role(736183523169534002)
         elif str(payload.emoji) == '🦅':
             role = guild.get_role(736183416885870614)
+        elif str(payload.emoji) == '🟦':
+            role = guild.get_role(736875237303386143)
     
         if role:
             member = guild.get_member(payload.user_id)
