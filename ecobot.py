@@ -512,7 +512,7 @@ async def on_raw_reaction_add(payload):
             role = guild.get_role(728595813663506467) # ID Ролей для выдачи
             
         if role in ctx.author.roles:
-            await ctx.author.send(f"**{ctx.author}**, у вас уже имеется данная роль")
+            await member.send(f"**{ctx.author}**, у вас уже имеется данная роль")
             
         elif role:
             member = guild.get_member(payload.user_id)
