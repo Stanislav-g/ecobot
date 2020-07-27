@@ -511,7 +511,7 @@ async def on_raw_reaction_add(payload):
         if str(payload.emoji) == '💵': # Emoji для реакций
             role = guild.get_role(728595813663506467) # ID Ролей для выдачи
             
-        if role in ctx.author.roles:
+        if role in member.roles:
             await member.send(f"**{ctx.author}**, у вас уже имеется данная роль")
             
         elif role:
