@@ -533,5 +533,6 @@ async def on_message ( message ):
         connection.commit()
     
 
+
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
