@@ -517,6 +517,26 @@ async def on_raw_reaction_add(payload):
                 connection.commit()
 
 
+#filter
+@client.event
+async def on_message ( message ):
+    await client.process_commands( message )
+
+    msg = message.content.lower()
+    cursor.execute("UPDATE users SET lvl= lvl + 1 WHERE id = {}".format(member.id)) 
+    connection.commit()
+    if lvl <= 10:
+        ppp_role = discord.utils.get( message.guild.roles, name = 'mute')
+        await message.author.add_roles( ppp_role )
+        await asyncio.sleep(120)
+        await message.author.remove_roles( ppp_role )
+    else:
+        await asyncio.sleep(5)
+        cursor.execute("UPDATE users SET lvl= lvl - 1 WHERE id = {}".format(member.id)) 
+        connection.commit()
+    
+        
+        
 
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
