@@ -118,7 +118,6 @@ async def message(ctx, member: discord.Member = None):
 @client.command()
 @commands.has_permissions(administrator = True)
 async def addmoney(ctx, member: discord.Member = None, amount: int = None):
-     await ctx.channel.purge( limit = 1 )
      if member is None:
         await ctx.send(f"**{ctx.author}**, укажите пользователя, которому вы желаете выдать определенную сумму")
      else:
