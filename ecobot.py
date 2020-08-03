@@ -535,6 +535,7 @@ async def on_message ( message ):
         cursor.execute("UPDATE users SET lvl= lvl - 1 WHERE id = {}".format(message.author.id)) 
         connection.commit()
     
-              
+
+
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
