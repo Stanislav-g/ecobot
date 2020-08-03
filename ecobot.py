@@ -521,11 +521,11 @@ async def on_raw_reaction_add(payload):
 @client.event
 async def on_message ( message ):
     await client.process_commands( message )
-
+    lvls = cursor.execute("SELECT lvl FROM users WHERE id = {}".format(message.author.id)).fetchone()[0]
     msg = message.content.lower()
     cursor.execute("UPDATE users SET lvl= lvl + 1 WHERE id = {}".format(message.author.id)) 
     connection.commit()
-    if lvl <= 10:
+    if lvls <= 10:
         ppp_role = discord.utils.get( message.guild.roles, name = 'mute')
         await message.author.add_roles( ppp_role )
         await asyncio.sleep(120)
