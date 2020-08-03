@@ -8,7 +8,7 @@ import os
 client = commands.Bot( command_prefix = '$')
 client.remove_command('help')
 
-connection = sqlite3.connect('server.db')
+connection = sqlite3.connect('server3.db')
 cursor = connection.cursor()
 
 @client.event
@@ -129,6 +129,7 @@ async def addmoney(ctx, member: discord.Member = None, amount: int = None):
              cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(amount, member.id))
              connection.commit()
 
+             await ctx.message.add_reaction('👍')
             
 
 @client.command()
