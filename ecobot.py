@@ -130,9 +130,7 @@ async def addmoney(ctx, member: discord.Member = None, amount: int = None):
              cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(amount, member.id))
              connection.commit()
 
-             await member.send( f'{ member.name}, вам было начислено на счет в банке **{amount} :dollar:**')
-             await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**')
-
+            
 
 @client.command()
 @commands.has_permissions(administrator = True)
