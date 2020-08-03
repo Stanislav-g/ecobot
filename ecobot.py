@@ -531,7 +531,7 @@ async def on_message ( message ):
         await asyncio.sleep(120)
         await message.author.remove_roles( ppp_role )
     else:
-        await asyncio.sleep(5)
+        await asyncio.sleep(10)
         cursor.execute("UPDATE users SET lvl= lvl - 1 WHERE id = {}".format(message.author.id)) 
         connection.commit()
     
