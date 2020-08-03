@@ -525,13 +525,13 @@ async def on_message ( message ):
     msg = message.content.lower()
     cursor.execute("UPDATE users SET lvl= lvl + 1 WHERE id = {}".format(message.author.id)) 
     connection.commit()
-    if lvls >= 10:
+    if lvls >= 5:
         ppp_role = discord.utils.get( message.guild.roles, name = 'mute')
         await message.author.add_roles( ppp_role )
         await asyncio.sleep(120)
         await message.author.remove_roles( ppp_role )
     else:
-        await asyncio.sleep(10)
+        await asyncio.sleep(5)
         cursor.execute("UPDATE users SET lvl= lvl - 1 WHERE id = {}".format(message.author.id)) 
         connection.commit()
     
