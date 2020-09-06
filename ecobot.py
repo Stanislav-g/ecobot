@@ -500,7 +500,26 @@ async def on_raw_reaction_remove(payload):
             if member:
                 await member.remove_roles(role)  
                 
-                
+    elif payload.message_id == 745689538608758806: # ID Сообщения
+        guild = client.get_guild(payload.guild_id)
+        role = None
+
+        if str(payload.emoji) == '1️⃣': # Emoji для реакций
+            role = guild.get_role(745685081489801246) # ID Ролей для выдачи
+        elif str(payload.emoji) == '2️⃣':
+            role = guild.get_role(745685081506709674)
+        elif str(payload.emoji) == '3️⃣':
+            role = guild.get_role(745685081548652594)
+        elif str(payload.emoji) == '4️⃣':
+            role = guild.get_role(745687846576455832)
+        elif str(payload.emoji) == '5️⃣':
+            role = guild.get_role(751762433504313405)
+	
+        if role:
+            member = guild.get_member(payload.user_id)
+            if member:
+                await member.remove_roles(role) 
+
 @client.event
 async def on_raw_reaction_add(payload):
     if payload.message_id == 729977336136728637: # ID Сообщения
