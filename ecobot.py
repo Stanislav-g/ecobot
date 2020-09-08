@@ -524,18 +524,53 @@ async def on_raw_reaction_remove(payload):
 
 @client.event
 async def on_raw_reaction_add(payload):
-    if payload.message_id == 729977336136728637: # ID Сообщения
+    
+    if payload.message_id == 752881363962822786: # ID Сообщения
         guild = client.get_guild(payload.guild_id)
         role = None
 
-        if str(payload.emoji) == '💵': # Emoji для реакций
-            role = guild.get_role(728595813663506467) # ID Ролей для выдачи
+        if str(payload.emoji) == '📜': # Emoji для реакций
+            role = guild.get_role(752878088077049887) # ID Ролей для выдачи
+
+
 
         if role:
             member = guild.get_member(payload.user_id)
             if member:
-                cursor.execute("UPDATE users SET cash = cash + 100 WHERE id = {}".format(member.id)) 
-                connection.commit()
+
+                if role in member.roles:
+                    await member.send(f'Вы уже создали тикет')
+                else:
+                    await member.add_roles(role) 
+                    if '1' == '2':
+                        await member.send(f'Вы уже создали тикет')
+
+                    else:
+                        roleee = guild.get_role(744464816726605824)
+                        overwrites = {
+                            member: discord.PermissionOverwrite(read_messages=True, send_messages=True),
+                            member.guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True, manage_channels=True, manage_roles=True),
+                            member.guild.default_role: discord.PermissionOverwrite(
+                                read_messages=False)
+                        }
+
+                        ticket = await guild.create_text_channel(
+                            name=member.name,
+                            overwrites=overwrites,
+                            topic=f'Ticket created by {member} ({member.id}) with subject ',
+                            reason=f'Ticket created by {member} ({member.id})'
+                        )
+
+                        await member.send(embed = discord.Embed(description = f'**Текстовой канал успешно создан!**', color=0x0c0c0c))
+                        embed = discord.Embed(
+                            title=f'Ticket opened by {member}',
+                            timestamp=datetime.datetime.now(datetime.timezone.utc),
+                            color=member.color
+                        )
+                        text = await ticket.send(embed=embed)
+                        await text.add_reaction('✅')
+                        te = await member.send(text.id)
+                        
 
 
 #filter
