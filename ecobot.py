@@ -4,6 +4,7 @@ import asyncio
 from time import sleep
 import sqlite3
 import os
+import datetime
 
 client = commands.Bot( command_prefix = '$')
 client.remove_command('help')
@@ -561,7 +562,7 @@ async def on_raw_reaction_add(payload):
                             reason=f'Ticket created by {member} ({member.id})'
                         )
 
-                        await member.send(embed = discord.Embed(description = f'**Текстовой канал успешно создан!**', color=0x0c0c0c))
+                        await member.send(embed = discord.Embed(description = f'**Тикет успешно создан!**', color=0x0c0c0c))
                         embed = discord.Embed(
                             title=f'Ticket opened by {member}',
                             timestamp=datetime.datetime.now(datetime.timezone.utc),
