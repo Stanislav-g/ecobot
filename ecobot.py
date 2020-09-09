@@ -558,7 +558,7 @@ async def on_raw_reaction_add(payload):
                         ticket = await guild.create_text_channel(
                             name=member.name,
                             overwrites=overwrites,
-                            topic=f'Ticket created by {member} ({member.id}) with subject ',
+                            topic=f'Ticket created by {member} ({member.id}) :CC: ',
                             reason=f'Ticket created by {member} ({member.id})'
                         )
 
