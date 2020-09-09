@@ -570,7 +570,7 @@ async def on_raw_reaction_add(payload):
                         )
                         text = await ticket.send(embed=embed)
                         await text.add_reaction('✅')
-                        te = await member.send(text.id)
+
                         
 
 
