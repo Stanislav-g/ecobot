@@ -1,1 +1,1 @@
-worker: python ecobot.py
+worker: python 111.py
