@@ -59,7 +59,7 @@ async def bank(ctx):
         pass
 
 @client.command()
-async def balancee(ctx, member: discord.Member = None):
+async def balance(ctx, member: discord.Member = None):
     if member is None:
         a = int(ctx.author.id) + int(ctx.guild.id)
         if cursor.execute(f"SELECT id FROM users WHERE id = {a}").fetchone() is None:
