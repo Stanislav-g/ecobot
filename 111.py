@@ -134,7 +134,5 @@ async def removemoney(ctx, member: discord.Member = None, amount = None):
              await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(b)).fetchone()[0]} :dollar:**')
 
 
-
-
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
