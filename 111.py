@@ -84,8 +84,6 @@ async def balance(ctx, member: discord.Member = None):
 
 
 
-
-
 @client.command()
 @commands.has_permissions(administrator = True)
 async def addmoney(ctx, member: discord.Member = None, amount: int = None):
