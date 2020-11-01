@@ -137,7 +137,5 @@ async def removemoney(ctx, member: discord.Member = None, amount = None):
 
 
 
-
-
 token = os.environ.get('BOT_TOKEN')
 client.run(str(token))
