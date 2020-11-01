@@ -47,8 +47,7 @@ async def on_ready():
     connection.commit()
     print('Bot connected')
 
-    
-@client.command()
+   @client.command()
 async def bank(ctx):
     useree = int(ctx.author.id) + int(ctx.guild.id)
     if cursor.execute(f"SELECT id FROM users WHERE id = {useree}").fetchone() is None:
@@ -72,13 +71,17 @@ async def balance(ctx, member: discord.Member = None):
         
     
     else:
-        b = str(member.id) + str(ctx.author.guild.id)
+        b = int(member.id) + int(ctx.author.guild.id)
         if cursor.execute(f"SELECT id FROM users WHERE id = {b}").fetchone() is None:
             await ctx.send("У данного пользователя не открыт счет в банке")
         else:
             await ctx.send(embed = discord.Embed(
                 description = f"""Баланс пользователя **{member}** составляет **{cursor.execute("SELECT cash From users WHERE id = {}".format(b)).fetchone()[0]} :dollar:**"""
             ))
+
+
+
+
 
 
 
