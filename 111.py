@@ -133,8 +133,6 @@ async def removemoney(ctx, member: discord.Member = None, amount = None):
              await member.send( f'{ member.name}, с вашего счета в банке было списано **{amount} :dollar:**')
              await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(b)).fetchone()[0]} :dollar:**')
 
-
-
 @client.command()
 @commands.has_permissions(administrator = True)
 async def addshop(ctx, role: discord.Role = None, cost: int = None):
@@ -147,9 +145,10 @@ async def addshop(ctx, role: discord.Role = None, cost: int = None):
         await ctx.send(f"**{ctx.author}**, стоимость роли не может быть отрицательной")
     else:
         r = int(role.id) + int(ctx.guild.id)
-        if cursor.execute(f"SELECT id FROM users WHERE id = {r}").fetchone() is None:
-            cursor.execute("INSERT INTO shop VALUES ({}, {}, {})".format(r, ctx.guild.name, cost))
+        if cursor.execute(f"SELECT id FROM shop WHERE role_id = {role.id}").fetchone() is None:
+            cursor.execute("INSERT INTO shop VALUES ({}, {}, {})".format(role.id, ctx.guild.id, cost))
             connection.commit()
+            await ctx.send("Роль добавленна в магазин!")
         else:
             await ctx.send("Данная роль уже в магазине!")
              
@@ -164,8 +163,9 @@ async def removeshop(ctx, role: discord.Role = None):
         
     else:
         r = int(role.id) + int(ctx.guild.id)
-        cursor.execute("DELETE FROM shop WHERE role_id = {}".format(r))
+        cursor.execute("DELETE FROM shop WHERE role_id = {}".format(role.id))
         connection.commit()
+        await ctx.send("Роль удалена из магазина!")
 
 
 
@@ -173,7 +173,6 @@ async def removeshop(ctx, role: discord.Role = None):
 @client.command()
 async def shop(ctx):
     embed = discord.Embed(title = 'Магазин ролей $buyrole @роль')
-
     for row in cursor.execute("SELECT role_id, cost FROM shop WHERE id = {}".format(ctx.guild.id)):
         if ctx.guild.get_role(row[0]) != None:
             embed.add_field(
@@ -195,19 +194,23 @@ async def buyrole(ctx, role: discord.Role = None):
     if role is None:
         await ctx.send(f"**{ctx.author}**, укажите роль которую вы желаете приобрести")
     else:
-        if role in ctx.author.roles:
-            await ctx.send(f"**{ctx.author}**, у вас уже имеется данная роль")
-        r = int(role.id) + int(ctx.guild.id)
         a = int(ctx.author.id) + int(ctx.guild.id)
-        elif cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(r)).fetchone()[0] > cursor.execute("SELECT cash FROM users WHERE id = {}".format(a)).fetchone()[0]:
-            await ctx.send(f"**{ctx.author}**, на вашем счету недостаточно средств")
+        if cursor.execute(f"SELECT id FROM users WHERE id = {a}").fetchone() is None:
+            await ctx.send("У вас не открыт счет в банке, откройте его командой: =bank")
         else:
-            await ctx.author.add_roles(role)
             r = int(role.id) + int(ctx.guild.id)
             a = int(ctx.author.id) + int(ctx.guild.id)
-            cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(ro)).fetchone()[0], a))
+            if role in ctx.author.roles:
+                await ctx.send(f"**{ctx.author}**, у вас уже имеется данная роль")
+            elif cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(role.id)).fetchone()[0] > cursor.execute("SELECT cash FROM users WHERE id = {}".format(a)).fetchone()[0]:
+                await ctx.send(f"**{ctx.author}**, на вашем счету недостаточно средств")
+            else:
+                await ctx.author.add_roles(role)
+                r = int(role.id) + int(ctx.guild.id)
+                a = int(ctx.author.id) + int(ctx.guild.id)
+                cursor.execute("UPDATE users SET cash = cash - {0} WHERE id = {1}".format(cursor.execute("SELECT cost FROM shop WHERE role_id = {}".format(role.id)).fetchone()[0], a))
 
-            await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вы купили роль **{role}**')
+                await ctx.author.send( f'{ctx.author.name}, поздравляю вас! Вы купили роль **{role}**')
 
             
 
@@ -216,24 +219,35 @@ async def buyrole(ctx, role: discord.Role = None):
 
 @client.command()
 async def perevod(ctx, member: discord.Member = None, amount: int = None):
-
      a = int(ctx.author.id) + int(ctx.guild.id)
-     b = int(member.id) + int(ctx.author.guild.id)
-     if member is None:
-        await ctx.send(f"**{ctx.author}**, укажите пользователя, которому вы желаете выдать определенную сумму")
+     
+     if cursor.execute(f"SELECT id FROM users WHERE id = {a}").fetchone() is None:
+         await ctx.send("У вас не открыт счет в банке, откройте его командой: =bank")
      else:
-         if amount is None:
-             await ctx.send(f"**{ctx.author}**, укажите сумму")
-         elif amount < 1:
-             await ctx.send(f"**{ctx.author}**, укажите сумму больше 1 :dollar:")
-         
+         if member is None:
+             await ctx.send(f"**{ctx.author}**, укажите пользователя, которому вы желаете перевести определенную сумму")
          else:
-             cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(amount, b))
-             cursor.execute("UPDATE users SET cash = cash - {} WHERE id = {}".format(amount, a))
-             connection.commit()
+             b = int(member.id) + int(ctx.author.guild.id)
+             if cursor.execute(f"SELECT id FROM users WHERE id = {b}").fetchone() is None:
+                 await ctx.send("У данного пользователя не открыт счет в банке!")
+             else:
+                 if amount is None:
+                     await ctx.send(f"**{ctx.author}**, укажите сумму")
+                 elif amount < 1:
+                     await ctx.send(f"**{ctx.author}**, укажите сумму больше 1 :dollar:")
+                 
+                 else:
+                     cursor.execute("UPDATE users SET cash = cash + {} WHERE id = {}".format(amount, b))
+                     cursor.execute("UPDATE users SET cash = cash - {} WHERE id = {}".format(amount, a))
+                     connection.commit()
 
-             await member.send( f'{ member.name}, вам было начислено на счет в банке **{amount} :dollar:**')
-             await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(member.id)).fetchone()[0]} :dollar:**')
+                     await member.send( f'{ member.name}, вам было начислено на счет в банке **{amount} :dollar:**')
+                     await member.send( f'{ member.name}, ваш счет в банке **{cursor.execute("SELECT cash From users WHERE id = {}".format(b)).fetchone()[0]} :dollar:**')
+
+               
+
+
+
 
 
 
