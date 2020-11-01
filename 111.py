@@ -294,5 +294,5 @@ async def perevod(ctx, member: discord.Member = None, amount: int = None):
 
 
 
-token =('NzIxMzc0MDM1Njk4Nzc4MTcz.XuTl7A.2ylws_cDUHc19r6EzEvCDVBWcfM')
-client.run( token )
+token = os.environ.get('BOT_TOKEN')
+client.run(str(token))
