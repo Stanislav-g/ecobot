@@ -47,7 +47,7 @@ async def on_ready():
     connection.commit()
     print('Bot connected')
 
-   @client.command()
+@client.command()
 async def bank(ctx):
     useree = int(ctx.author.id) + int(ctx.guild.id)
     if cursor.execute(f"SELECT id FROM users WHERE id = {useree}").fetchone() is None:
